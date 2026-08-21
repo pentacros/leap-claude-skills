@@ -1,0 +1,16 @@
+{
+  "description": "Blocks the session from finishing while the newest realstitch build report shows a safe-zone gate FAILURE. Reads only build reports in output/; fails open when none exist, when the report is not gated, or on any error.",
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/gate_check.py\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

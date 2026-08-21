@@ -1,6 +1,14 @@
 {
   "name": "realstitch",
-  "description": "Branded 9:16 reel builder for talking-head footage: forced alignment, chroma key, pause removal, word-highlighted captions, storyboard graphics and b-roll.",
-  "version": "1.0.0",
-  "keywords": ["video", "reel", "ffmpeg", "chroma-key", "captions", "instagram"]
+  "description": "Branded 9:16 reel builder for talking-head footage: forced alignment, chroma key, pause removal, word-highlighted captions, storyboard graphics and b-roll. Ships a frames-first /reel command, a read-only reel-reviewer agent, and a Stop hook that blocks handover while the safe-zone gate fails.",
+  "version": "1.1.0",
+  "keywords": [
+    "video",
+    "reel",
+    "ffmpeg",
+    "chroma-key",
+    "captions",
+    "instagram",
+    "forced-alignment"
+  ]
 }

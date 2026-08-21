@@ -37,6 +37,18 @@ so flicker actually gets caught.
 |---|---|
 | `realstitch` | 9:16 reel builder, plus `extend_frame.py` for reshaping 16:9 footage with a supplied still |
 
+### What `realstitch` gives you
+
+| component | name | does |
+|---|---|---|
+| skill | `realstitch` | the pipeline, plus four reference docs of measured findings |
+| command | `/realstitch:reel` | frames-first build: measure, render frames, wait for approval, then build |
+| agent | `reel-reviewer` | read-only check of a delivered reel against the gate, keying churn and delivery spec |
+| hook | `Stop` | refuses to finish while the newest build report shows a safe-zone FAILURE |
+
+The hook reads only `output/build-report*.md` and fails open — no reports, an
+ungated report, or any error and it stays silent.
+
 ## Adding another plugin later
 
     plugins/<name>/.claude-plugin/plugin.json
