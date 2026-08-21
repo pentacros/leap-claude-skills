@@ -57,9 +57,10 @@ def main():
     if not envfile.load("ELEVENLABS_API_KEY"):
         problems.append(("ELEVENLABS_API_KEY not set - stage 1 (forced alignment) "
                          "cannot run without it",
-                         "Open the .env file in the project folder and paste the key "
+                         "The key belongs in the .env file in the project folder, "
                          "after ELEVENLABS_API_KEY= .\n"
-                         "         Ask Aniket (aniket.rajput@leapfinance.com) for it.\n"
+                         "         Aniket (aniket.rajput@leapfinance.com) sets this up - "
+                         "send him the path to that file.\n"
                          "         It stays on this machine. Never commit it."))
 
     if not os.path.exists(HN):

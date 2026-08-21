@@ -149,11 +149,10 @@ def main():
     print()
     import envfile
     if not envfile.load("ELEVENLABS_API_KEY", project):
-        print("API KEY: not set yet.")
-        print(f"  Open this file and paste the key after the = sign, then save:")
+        print("API KEY: not set yet. Aniket sets this up - you do not need to find a key.")
+        print("  Send him this exact path and he will paste it in:")
         print(f"    {env}")
-        print("  Ask Aniket (aniket.rajput@leapfinance.com) if you do not have it.")
-        print("  It stays on this computer. About $0.12 per reel.")
+        print("  Everything else can be prepared while you wait for that.")
         ok = False
     else:
         print("API KEY: found.")

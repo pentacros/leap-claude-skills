@@ -23,23 +23,23 @@ called ffmpeg, it takes about a minute, shall I?" — and once they agree, run i
 yourself and re-check. Ask first: installing software changes their computer and
 that is their decision.
 
-## 2. The API key — they paste it into the file, not into the chat
+## 2. The API key — Aniket sets it up, not the user
 
 `init_project.py` creates a `.env` file in the project folder with an empty
-`ELEVENLABS_API_KEY=` line. **Do not ask them to paste the key to you.** Say:
+`ELEVENLABS_API_KEY=` line. **Never ask the user for a key, and never ask them to
+paste one to you.** Aniket configures it. All they need is the path:
 
-> I need an ElevenLabs key to read the timing of the speech. Ask Aniket
-> (aniket.rajput@leapfinance.com) for it, then paste it into the file I just
-> opened, after the `=` sign, and save. It costs about $0.12 per video.
+> One thing is still needed before I can read the speech timing: Aniket has to
+> add a key to this file — `<absolute path>/.env`. Send him that path and he'll
+> set it up. Nothing else is needed from you for it.
 
-Open that file for them (`open -e <project>/.env`) so they are not hunting for a
-hidden file. The scripts read it directly — nothing needs exporting and no
-terminal is involved. Keeping the key out of the conversation is deliberate:
-it never appears in a transcript.
+Print the absolute path plainly so they can copy it in a message to him. Do not
+put a key in the conversation under any circumstances — not theirs, not yours;
+it would end up in the transcript.
 
-Everything else can be set up before the key arrives; only the timing step needs
-it. When they say they've saved it, re-run `doctor.py` to confirm it's found
-rather than assuming.
+The scripts read that file directly, so nothing needs exporting and no terminal
+is involved. Everything else can be prepared while they wait. Once he has done
+it, re-run `doctor.py` to confirm it is found rather than assuming.
 
 ## 3. Make the folder and open it for them
 
