@@ -1,0 +1,18 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "leap-video",
+  "description": "Internal Claude Code plugins for Leap Scholar video production",
+  "owner": {
+    "name": "Leap Scholar",
+    "email": "aniket.rajput@leapfinance.com"
+  },
+  "plugins": [
+    {
+      "name": "realstitch",
+      "description": "Build a branded 9:16 Instagram reel from talking-head footage. Forced alignment first, then chroma key onto a supplied background, pause removal, word-highlighted captions, storyboard-driven b-roll and graphics. Includes a generic tool for reshaping 16:9 footage to 9:16 using a supplied still.",
+      "author": { "name": "Leap Scholar" },
+      "category": "media",
+      "source": "./plugins/realstitch"
+    }
+  ]
+}

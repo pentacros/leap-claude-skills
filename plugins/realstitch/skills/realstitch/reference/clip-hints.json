@@ -1,0 +1,28 @@
+{
+  "_doc": [
+    "Per-clip in-points and crop centres, MEASURED from the footage rather than",
+    "defaulted. Without this a cutaway starts at 0.1s and centre-crops, which put",
+    "a globe over North America on the line 'the UK and parts of Europe', and cut",
+    "the approval stamp before the mark appeared.",
+    "",
+    "Match is on a substring of the filename (lowercased).",
+    "  src_in  : seconds into the clip where the subject of the shot is READABLE",
+    "  crop_x  : left edge of the 608px vertical crop, centred on the region of",
+    "            interest in the 1920-wide source",
+    "  why     : how the number was arrived at, so it can be re-checked"
+  ],
+  "hints": [
+    {
+      "match": "for map animation",
+      "src_in": 4.0,
+      "crop_x": 605,
+      "why": "clip opens on a globe over North America; the UK reveal runs 4.0-7.0s - highlight fades in, label lands ~5.0s, then a slow zoom holds. UK silhouette centres at x=909, so crop 909-304=605."
+    },
+    {
+      "match": "stamping-approval",
+      "src_in": 4.3,
+      "crop_x": 620,
+      "why": "green APPROVED mark is readable on the form from 4.3s and holds. crop_x 620 keeps the mark fully inside the 608px frame and excludes the red REJECTED stamp, which contradicts this positive beat. (946 clipped the 'A' off APPROVED.)"
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "name": "realstitch",
+  "description": "Branded 9:16 reel builder for talking-head footage: forced alignment, chroma key, pause removal, word-highlighted captions, storyboard graphics and b-roll.",
+  "version": "1.0.0",
+  "keywords": ["video", "reel", "ffmpeg", "chroma-key", "captions", "instagram"]
+}
