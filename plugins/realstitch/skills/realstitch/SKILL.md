@@ -20,6 +20,29 @@ them approved, then build. A build is ~10 minutes; a frame is seconds. Run fully
 autonomously only when the look is already locked from a previous version, and
 still emit review material (proof frame, resolved plan, build report) into `output/`.
 
+## First run — set the person up before anything else
+
+Assume whoever is running this is **not technical**: they will not open a
+terminal, run commands, or edit config. You do every mechanical step. Never hand
+them a command to run.
+
+1. Run `scripts/doctor.py`. If something is missing it prints one
+   `--install-cmd:` line — do not show it to them; say in plain words what needs
+   installing, ask, and run it yourself.
+2. Run `scripts/init_project.py --dir <folder>` to create the project layout. It
+   prints the absolute path of every folder and what belongs in each, links the
+   bundled brand assets, writes a `storyboard.csv` template, and creates a `.env`.
+   Open the folder in Finder (`open <path>`) so they can drag files in.
+3. The API key is **an admin task, not theirs**. Print the absolute path of the
+   `.env` and tell them Aniket (aniket.rajput@leapfinance.com) will paste the key
+   there. Never ask anyone for a key and never let a key into the conversation.
+4. If anything is missing, stop and say what you are waiting for. Do not build
+   against the template storyboard and do not invent a script.
+
+**Show frames before you render.** A build is ~10 minutes; a frame is seconds.
+Render stills, name every setting, wait for an explicit yes, and change one
+variable at a time. This is not optional.
+
 ## Inputs
 
 Point the skill at a folder. Discover by convention, and state what you found:
@@ -36,7 +59,7 @@ Brand assets (follow button, outro slate, question sticker) ship **inside this s
 
 ## Stage 0 — Preflight
 
-Run `scripts/doctor.py`. It verifies ffmpeg exists with `chromakey`, `despill`, `gblur`, `alphamerge`, `zoompan`, and that Python has numpy + Pillow.
+Run `scripts/doctor.py`. It verifies ffmpeg exists with `chromakey`, `despill`, `gblur`, `alphamerge`, `zoompan`, that Python has numpy + Pillow + requests, and that the ElevenLabs key is reachable (it reads a nearby `.env`, so nothing needs exporting).
 
 If anything is missing, **stop and print the exact install commands it gives you.** Never auto-install.
 
@@ -50,7 +73,7 @@ This is the foundation. Everything else reads its output.
 python3 scripts/align.py <footage> --out <folder>/alignment.json
 ```
 
-- Requires `ELEVENLABS_API_KEY`. If unset, stop with the setup line `doctor.py` prints.
+- Requires `ELEVENLABS_API_KEY`, read from the environment or a nearby `.env` via `scripts/envfile.py`. If absent, stop and give the absolute path of the `.env` for Aniket to fill in.
 - If no script/transcript exists, it transcribes the audio first, then aligns against that text.
 
 **Never reuse an alignment just because one is sitting in the folder.** An alignment belongs to exactly one audio file. Re-align by default; only pass `--reuse` when you know the JSON was made from *this* file.
@@ -137,6 +160,14 @@ Rules:
 - **If a row cannot be resolved, stop.** List the unresolvable rows and why. Do not silently ship a different video.
 
 B-roll quantity and placement come from the storyboard, not from a target percentage.
+
+## The question sticker is drawn, not bitmapped
+
+`scripts/question_card.py` renders it from the sticker beat's own script line, and
+`overlay.py` calls it automatically. The bundled `assets/brand/question-sticker.png`
+is a visual reference only — it has one question baked into its pixels, which is
+how a reel once shipped copy the storyboard never asked for. Never composite that
+file directly.
 
 ## Stage 5 — Render
 

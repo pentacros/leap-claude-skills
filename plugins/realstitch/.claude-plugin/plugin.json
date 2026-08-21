@@ -1,7 +1,7 @@
 {
   "name": "realstitch",
   "description": "Branded 9:16 reel builder for talking-head footage: forced alignment, chroma key, pause removal, word-highlighted captions, storyboard graphics and b-roll. Ships /realstitch:init to scaffold a project, a frames-first /realstitch:reel command, a reel-reviewer agent, a safe-zone Stop hook, and a question sticker drawn from the storyboard rather than baked into a bitmap.",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "keywords": [
     "video",
     "reel",
