@@ -23,22 +23,23 @@ called ffmpeg, it takes about a minute, shall I?" — and once they agree, run i
 yourself and re-check. Ask first: installing software changes their computer and
 that is their decision.
 
-If they are not on macOS, tell them before anything else that the captions won't
-render on their machine and they'll need a Mac. Don't let them supply files first
-and discover it later.
+## 2. The API key — they paste it into the file, not into the chat
 
-## 2. The API key
-
-If the key is missing, do not tell them to `export` anything. Say:
+`init_project.py` creates a `.env` file in the project folder with an empty
+`ELEVENLABS_API_KEY=` line. **Do not ask them to paste the key to you.** Say:
 
 > I need an ElevenLabs key to read the timing of the speech. Ask Aniket
-> (aniket.rajput@leapfinance.com) for it and paste it here — I'll store it in
-> the project folder. It costs about $0.12 per video.
+> (aniket.rajput@leapfinance.com) for it, then paste it into the file I just
+> opened, after the `=` sign, and save. It costs about $0.12 per video.
 
-When they paste it, write it to a `.env` file in the project folder yourself, and
-tell them it stays on their computer and is never shared or committed. Never echo
-the key back on screen. If they'd rather not paste it, everything else can be set
-up first — only the timing step needs it.
+Open that file for them (`open -e <project>/.env`) so they are not hunting for a
+hidden file. The scripts read it directly — nothing needs exporting and no
+terminal is involved. Keeping the key out of the conversation is deliberate:
+it never appears in a transcript.
+
+Everything else can be set up before the key arrives; only the timing step needs
+it. When they say they've saved it, re-run `doctor.py` to confirm it's found
+rather than assuming.
 
 ## 3. Make the folder and open it for them
 

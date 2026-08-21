@@ -53,13 +53,14 @@ def main():
             problems.append((f"python module '{mod}' not installed",
                              f"pip3 install --user --break-system-packages {pip}"))
 
-    if not os.environ.get("ELEVENLABS_API_KEY"):
+    import envfile
+    if not envfile.load("ELEVENLABS_API_KEY"):
         problems.append(("ELEVENLABS_API_KEY not set - stage 1 (forced alignment) "
                          "cannot run without it",
-                         "Ask Aniket (aniket.rajput@leapfinance.com) for the key, then:\n"
-                         "         export ELEVENLABS_API_KEY='the-key'\n"
-                         "         # add that line to ~/.zshrc to persist it\n"
-                         "         # never commit it to a repo"))
+                         "Open the .env file in the project folder and paste the key "
+                         "after ELEVENLABS_API_KEY= .\n"
+                         "         Ask Aniket (aniket.rajput@leapfinance.com) for it.\n"
+                         "         It stays on this machine. Never commit it."))
 
     if not os.path.exists(HN):
         notes.append(f"Helvetica Neue not found at {HN} - will fall back to Arial. "

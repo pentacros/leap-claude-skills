@@ -202,10 +202,13 @@ def main():
         validate_reuse(raw, words, a.footage, probe_duration(a.footage))
         engine = "reused"
     else:
-        key = os.environ.get("ELEVENLABS_API_KEY")
+        import envfile
+        key = envfile.load("ELEVENLABS_API_KEY")
         if not key:
-            die("ELEVENLABS_API_KEY not set",
-                "export ELEVENLABS_API_KEY='your-key-here'")
+            die("ELEVENLABS_API_KEY not set and no .env holds it",
+                "Open the .env file in this project folder and paste the key "
+                "after ELEVENLABS_API_KEY= . Ask Aniket "
+                "(aniket.rajput@leapfinance.com) if you do not have it.")
         with tempfile.TemporaryDirectory() as td:
             wav = os.path.join(td, "a.wav")
             extract_audio(a.footage, wav)

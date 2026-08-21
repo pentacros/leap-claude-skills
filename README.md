@@ -15,7 +15,8 @@ Updates arrive with `/plugin marketplace update leap-video` — no re-sending fi
 
     brew install ffmpeg
     pip3 install --user --break-system-packages numpy pillow requests
-    export ELEVENLABS_API_KEY=...        # forced alignment; never commit this
+Then paste the ElevenLabs key into the project's `.env` file (created by
+`/realstitch:init`). The scripts read it from there - nothing to export.
 
 Check with `python3 .../skills/realstitch/scripts/doctor.py`. Note it does **not**
 check for `requests` — install it anyway or stage 1 dies after preflight passes.

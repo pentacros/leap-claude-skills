@@ -29,8 +29,10 @@ STORYBOARD_EXAMPLE = [
     ("A line that should list points.",
      "Put in bullet points: First, Second, Third.", ""),
 ]
-ENV_EXAMPLE = ("# Forced alignment. Never commit the real value.\n"
-               "ELEVENLABS_API_KEY=your-key-here\n")
+ENV_TEMPLATE = ("# Paste the ElevenLabs key after the = sign, save, and close.\n"
+                "# Ask Aniket (aniket.rajput@leapfinance.com) if you do not have it.\n"
+                "# This file stays on your computer. Never share or commit it.\n"
+                "ELEVENLABS_API_KEY=\n")
 
 
 def find(dirpath, exts):
@@ -84,10 +86,11 @@ def main():
 
     brand, brand_note = link_brand(project)
     sb, sb_note = write_storyboard(project)
-    env = os.path.join(project, ".env.example")
-    if not os.path.exists(env):
+    env = os.path.join(project, ".env")
+    env_new = not os.path.exists(env)
+    if env_new:
         with open(env, "w", encoding="utf-8") as fh:
-            fh.write(ENV_EXAMPLE)
+            fh.write(ENV_TEMPLATE)
 
     footage = find(project, FOOTAGE_EXT)
     images = find(project, IMAGE_EXT)
@@ -114,7 +117,7 @@ def main():
     print(f"  folders      {', '.join(SUBDIRS)}")
     print(f"  brand/       {brand_note}")
     print(f"  storyboard   {sb_note}")
-    print(f"  .env.example written (export the key; do not commit it)")
+    print(f"  .env         {'created - paste the key into it' if env_new else 'already present'}")
     print()
     print("SHIPPED WITH THE PLUGIN - you do not need to find or place these:")
     print("  - Leap outro slate")
@@ -144,14 +147,16 @@ def main():
         print("  [note]    Asset/ is empty - b-roll clips and logos are per-topic. "
               "Any storyboard row naming one will go unresolved until you add it.")
     print()
-    if not os.environ.get("ELEVENLABS_API_KEY"):
-        print("API KEY: not set. Forced alignment (stage 1) cannot run without it.")
-        print("  Ask Aniket (aniket.rajput@leapfinance.com) for the ElevenLabs key, then:")
-        print("    export ELEVENLABS_API_KEY='the-key'      # add to ~/.zshrc to persist")
-        print("  Never commit it. Cost is about $0.12 per reel.")
+    import envfile
+    if not envfile.load("ELEVENLABS_API_KEY", project):
+        print("API KEY: not set yet.")
+        print(f"  Open this file and paste the key after the = sign, then save:")
+        print(f"    {env}")
+        print("  Ask Aniket (aniket.rajput@leapfinance.com) if you do not have it.")
+        print("  It stays on this computer. About $0.12 per reel.")
         ok = False
     else:
-        print("API KEY: set.")
+        print("API KEY: found.")
     print()
     print("READY - ask for the build" if ok
           else "NOT READY - add the items marked MISSING above, then re-run this")
