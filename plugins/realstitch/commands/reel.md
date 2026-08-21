@@ -4,12 +4,17 @@ disable-model-invocation: false
 ---
 
 Build a vertical reel from the footage in the given folder (default: the current
-directory). Follow the `realstitch` skill, with one override that matters more
-than anything else in it:
+directory). Follow the `realstitch` skill.
 
-**Render frames and get them approved before building.** A build is ~10 minutes
-per variant; a frame is seconds. Do not spend the ten minutes before the look is
-agreed.
+Assume the person is **not technical**: they will not run commands or read a
+filter graph. Report progress in plain language, and never hand them a command to
+run - do it yourself. Two overrides matter more than anything else in the skill:
+
+**Render frames and get them approved before building. This is not optional.**
+A build is ~10 minutes per variant; a frame is seconds. Never start a render the
+user has not seen a still of - show the frames, say what every knob is set to,
+and wait for an explicit yes. If they ask for a change, change one variable at a
+time and re-render frames, not the video.
 
 Run in this order:
 
@@ -30,5 +35,9 @@ Before handing anything over, read `reference/HANDOFF.md` in the skill. It lists
 seven known bugs in these scripts with the workaround for each, and the keying
 metrics that actually catch flicker.
 
-State what you found and what you assumed. If a check is untestable, say so
-rather than reporting it as passing.
+State what you found and what you assumed, in plain language. If a check is
+untestable, say so rather than reporting it as passing - `av_sync: ok` whose
+detail reads "not enough data to compare" is untested, not passed.
+
+When you hand over the finished reel, say what it is and where it is, and offer
+to open the folder. Do not end on a wall of measurements unless they ask.

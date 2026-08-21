@@ -96,13 +96,27 @@ def main():
         rows = [r for r in csv.DictReader(fh) if (r.get("script_line") or "").strip()]
     template_still = any("Replace this with" in (r["script_line"] or "") for r in rows)
 
-    print(f"project: {project}")
+    print("=" * 72)
+    print(f"PROJECT FOLDER:  {project}")
+    print("=" * 72)
+    print("Put your files here:")
+    print(f"  {os.path.join(project, '<your-footage>.mp4'):<58} your talking-head video")
+    print(f"  {os.path.join(project, '<background>.jpg'):<58} background (green-screen footage only)")
+    print(f"  {os.path.join(project, 'storyboard.csv'):<58} one row per line of your script")
+    print(f"  {os.path.join(project, 'Asset') + '/':<58} b-roll clips + logos your storyboard names")
+    print()
+    print("Written for you - do not edit:")
+    print(f"  {os.path.join(project, 'brand') + '/':<58} Leap outro + follow button (symlink, ~25MB)")
+    print(f"  {os.path.join(project, 'work') + '/':<58} intermediates; safe to delete")
+    print(f"  {os.path.join(project, 'output') + '/':<58} finished reel, report, captions")
+    print("=" * 72)
+    print()
     print(f"  folders      {', '.join(SUBDIRS)}")
     print(f"  brand/       {brand_note}")
     print(f"  storyboard   {sb_note}")
     print(f"  .env.example written (export the key; do not commit it)")
     print()
-    print("SHIPPED WITH THE PLUGIN - you do not need to supply these:")
+    print("SHIPPED WITH THE PLUGIN - you do not need to find or place these:")
     print("  - Leap outro slate")
     print("  - Leap follow-button animation")
     print("  - the question sticker, now DRAWN from your storyboard's first line")
@@ -130,7 +144,17 @@ def main():
         print("  [note]    Asset/ is empty - b-roll clips and logos are per-topic. "
               "Any storyboard row naming one will go unresolved until you add it.")
     print()
-    print("ready to build" if ok else "add the MISSING items above, then re-run this")
+    if not os.environ.get("ELEVENLABS_API_KEY"):
+        print("API KEY: not set. Forced alignment (stage 1) cannot run without it.")
+        print("  Ask Aniket (aniket.rajput@leapfinance.com) for the ElevenLabs key, then:")
+        print("    export ELEVENLABS_API_KEY='the-key'      # add to ~/.zshrc to persist")
+        print("  Never commit it. Cost is about $0.12 per reel.")
+        ok = False
+    else:
+        print("API KEY: set.")
+    print()
+    print("READY - ask for the build" if ok
+          else "NOT READY - add the items marked MISSING above, then re-run this")
     return 0
 
 

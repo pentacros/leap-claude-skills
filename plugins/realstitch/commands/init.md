@@ -1,31 +1,77 @@
 ---
-description: Scaffold a reel project folder and report what's still missing
+description: First run — set everything up for the user, no terminal required
 disable-model-invocation: false
 ---
 
-Set up a new reel project. Run the skill's `scripts/init_project.py` against the
-folder the user named, or the current directory if they didn't name one.
+The person running this is **not technical**. They will not open a terminal, run
+commands, edit config files, or copy shell snippets. You do all of it. Never show
+them a command and ask them to run it — run it yourself.
 
-It creates `Asset/`, `work/`, `output/`, links `brand/` to the bundled Leap
-assets, writes a `storyboard.csv` template and a `.env.example`, then reports
-what is present and what is missing.
+Speak plainly. No `pip3`, no `export`, no filter graphs, no jargon unless they
+ask. They need to know three things only: where to put their files, what you
+still need from them, and when they'll see something.
 
-Relay its report, then be explicit about the split:
+Work through this in order.
 
-**Shipped with the plugin — the user supplies nothing:**
-- the Leap outro slate
-- the Leap follow-button animation
-- the question sticker, which is now **drawn** from the storyboard's first line
-  rather than being a fixed image
+## 1. Get the machine ready (you, silently)
 
-**The user must supply:**
-- their talking-head footage
-- a background image, but only if the footage is green screen
-- their own `storyboard.csv` rows, replacing the template
-- an `ELEVENLABS_API_KEY` in the environment
-- any per-topic b-roll or logos into `Asset/`, since those cannot be defaults
+Run `scripts/doctor.py` yourself.
 
-If anything is missing, say exactly which and stop — do not start a build against
-a template storyboard. If everything is present, offer to run `/realstitch:reel`.
+If something is missing it prints an `--install-cmd:` line. **Do not show that
+line to the user.** Say it in plain language — "I need to install a video tool
+called ffmpeg, it takes about a minute, shall I?" — and once they agree, run it
+yourself and re-check. Ask first: installing software changes their computer and
+that is their decision.
 
-Never copy the brand assets; `brand/` is a symlink on purpose, they are ~25MB.
+If they are not on macOS, tell them before anything else that the captions won't
+render on their machine and they'll need a Mac. Don't let them supply files first
+and discover it later.
+
+## 2. The API key
+
+If the key is missing, do not tell them to `export` anything. Say:
+
+> I need an ElevenLabs key to read the timing of the speech. Ask Aniket
+> (aniket.rajput@leapfinance.com) for it and paste it here — I'll store it in
+> the project folder. It costs about $0.12 per video.
+
+When they paste it, write it to a `.env` file in the project folder yourself, and
+tell them it stays on their computer and is never shared or committed. Never echo
+the key back on screen. If they'd rather not paste it, everything else can be set
+up first — only the timing step needs it.
+
+## 3. Make the folder and open it for them
+
+Ask what to call the project; suggest `~/Downloads/<name>-reel`. Run
+`scripts/init_project.py --dir <path>` yourself, then **open the folder in Finder
+for them** (`open <path>`) so they can drag files in rather than typing paths.
+
+Then tell them, in plain sentences, what goes in:
+
+- their video of the person talking
+- a background picture — only if the video was shot on a green screen
+- the script, one line per row, in `storyboard.csv` (offer to fill this in for
+  them if they paste or dictate the script; do not make them edit a spreadsheet
+  alone)
+- any extra clips or logos the script calls for, into the `Asset` folder
+
+And what they do **not** need to find, because it ships with the plugin: the Leap
+outro, the Leap follow button, and the question sticker — that one is drawn
+automatically from the first line of their script.
+
+## 4. Wait for them
+
+If anything is missing, stop and say plainly what you're waiting for. Do not
+build against the example storyboard, and do not invent a script.
+
+When they say the files are in, re-run `init_project.py` to confirm rather than
+taking their word for it — then tell them what you found.
+
+## 5. Set the expectation, then hand over
+
+Before starting, tell them what happens next in one sentence: you'll look at
+their video, then **show them a picture of how it will look** and wait for their
+yes before making the video itself. Nothing gets rendered before they've seen a
+frame.
+
+Then continue with `/realstitch:reel`.

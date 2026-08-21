@@ -22,7 +22,7 @@ ten minutes before the look is agreed.
 
 | where | symptom | workaround used |
 |---|---|---|
-| `doctor.py` | preflight passes, then `align.py` dies — `requests` isn't in the module check | `pip3 install --user --break-system-packages requests` |
+| ~~`doctor.py`~~ | ~~preflight passes, then `align.py` dies — `requests` missing from the module check~~ | **FIXED in 1.3.0** — `requests` is checked, and it prints a one-line `--install-cmd` |
 | `analyze.py` | omits `graphics_band` on green-screen sources → `storyboard.py` warns "cards may overlap the speaker", which is the "element on his head" defect | patch `analysis.json`: `[220, round(head_top_out) - 28]` |
 | `analyze.py` | head detector fails on letterboxed/vignetted sources: returns `head_top` near 0 and a full-width `x0-x1`, then solves a badly shrunken frame | sanity-check `head_top`; measure from the alpha and patch `analysis.json` |
 | `build.py` | plate stage hardcodes `despill expand=0.3` and `vignette=PI/5` — the pink whites and crushed table edge that got rejected | pre-render `01_plate.mp4` into the work dir; `build.py` caches it and skips the stage. **Requires `--background` to be passed**, or it takes the "not green screen" branch and composites over the raw source |
