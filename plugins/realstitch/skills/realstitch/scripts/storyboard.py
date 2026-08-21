@@ -414,6 +414,11 @@ def main():
             rec["why"] = "no clip or graphic matched the Visual instruction"
             unresolved.append(rec)
         b["row"] = r["script_line"][:60]
+        if b["type"] == "sticker":
+            # The sticker's copy must be THIS video's question. Carrying only the
+            # truncated display row is how a reel once shipped a question the
+            # storyboard never asked for.
+            b["question"] = r["script_line"].strip()
         b["row_end"] = span["end"]
         beats.append(b)
 

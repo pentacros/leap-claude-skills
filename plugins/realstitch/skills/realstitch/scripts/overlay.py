@@ -92,7 +92,7 @@ def fit_font(d, text, start_px, weight=None, pad=0, floor=48):
     return (font(sz) if weight is None else font(sz, weight)), sz
 
 class Overlay:
-    def __init__(self, plan, timeline, brand):
+    def __init__(self, plan, timeline, brand, outdir=None):
         self.caps = timeline["captions"]
         self.dur = timeline["out_duration"]
         self.beats = plan.get("beats", [])
@@ -105,12 +105,28 @@ class Overlay:
                 "storyboard asks for a follow beat but no follow button asset was "
                 f"found in {brand} (expected follow-button.mov or follow/*.png). "
                 "Refusing to silently drop the beat.")
+        # Draw the sticker from the storyboard's own question when we have it.
+        # Every other card here is drawn, not bitmapped, which is why they always
+        # carry the right copy; the bundled PNG has one question baked into its
+        # pixels and is only a visual reference.
         sp = os.path.join(brand, "question-sticker.png")
+        question = next((b.get("question") for b in self.beats
+                         if b["type"] == "sticker" and b.get("question")), None)
+        if question and outdir:
+            try:
+                import question_card
+                sp = os.path.join(outdir, "_question-sticker.png")
+                os.makedirs(outdir, exist_ok=True)
+                question_card.render(question, out=sp)
+            except Exception as exc:
+                print(f"NOTE could not render the question card ({exc}); falling back "
+                      f"to the bundled PNG, which may carry the WRONG question")
+                sp = os.path.join(brand, "question-sticker.png")
         self.sticker = Image.open(sp).convert("RGBA") if os.path.exists(sp) else None
         if self.sticker:
             # Crop to the CARD, not the halo. getbbox() keeps every non-zero
-            # pixel, and this asset carries a soft shadow 1491px wide around a
-            # 1025px card - sizing to that made the visible sticker ~30% smaller
+            # pixel, and the bundled asset carries a soft shadow 1491px wide
+            # around a 1025px card - sizing to that made the sticker ~30% smaller
             # than intended. A small threshold keeps a tight shadow, drops the halo.
             a = self.sticker.split()[3]
             solid = a.point(lambda v: 255 if v > 40 else 0)
@@ -416,7 +432,7 @@ def main():
 
     tl = json.load(open(a.timeline))
     plan = json.load(open(a.plan))
-    ov = Overlay(plan, tl, a.brand)
+    ov = Overlay(plan, tl, a.brand, a.out)
     os.makedirs(a.out, exist_ok=True)
     n = int(round(tl["out_duration"] * FPS))
     for i in range(n):
