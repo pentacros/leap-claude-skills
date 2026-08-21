@@ -39,5 +39,10 @@ State what you found and what you assumed, in plain language. If a check is
 untestable, say so rather than reporting it as passing - `av_sync: ok` whose
 detail reads "not enough data to compare" is untested, not passed.
 
+**Before handing it over, dispatch the `reel-reviewer` agent** on the finished
+file. It is read-only and independent, which is the point - it has no stake in
+declaring your own render fine. Act on what it reports; do not pass its raw
+findings on to the user.
+
 When you hand over the finished reel, say what it is and where it is, and offer
 to open the folder. Do not end on a wall of measurements unless they ask.

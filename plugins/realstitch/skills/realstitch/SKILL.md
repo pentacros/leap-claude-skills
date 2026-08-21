@@ -189,6 +189,10 @@ Critical details that are easy to get wrong — all of them cost a wasted render
 
 ## Stage 6 — Verify, then report
 
+Run `scripts/verify.py`, then if a `reel-reviewer` agent is available, dispatch it
+on the delivered file for an independent read-only check. Verifying your own
+render is the weakest form of verification available.
+
 ```
 python3 scripts/verify.py <final> <work> --report output/build-report.md
 ```
