@@ -6,7 +6,7 @@ Internal marketplace for Leap Scholar video tooling.
 
 In Claude Code:
 
-    /plugin marketplace add leapfinance/leap-claude-skills
+    /plugin marketplace add pentacros/leap-claude-skills
     /plugin install realstitch@leap-video
 
 Updates arrive with `/plugin marketplace update leap-video` — no re-sending files.
